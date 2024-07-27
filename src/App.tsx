@@ -1,4 +1,6 @@
 import { useState } from "react";
+
+
 const recognition = new window.webkitSpeechRecognition();
 
 
@@ -39,7 +41,7 @@ function App() {
 
     const draft = structuredClone(messages)
     draft.push({
-      role: 'user',
+      role: "user",
       content: buffer
     })
 
@@ -48,11 +50,16 @@ function App() {
       body: JSON.stringify({
         model: "llama3",
         stream: false,
-        messages: draft
+        messages: draft,
       }),
-    }).then((response) => response.json() as Promise<{message: {role: 'asystand'; content: string}}> ).then(response => response.message)
+    })
+    .then(
+      (response) => response.json() as Promise<{message: {role: 'assistant'; content: string}}>
+    )
+    .then((response) => response.message)
 
-    console.log(answer);
+  draft.push(answer);
+  setMessages(draft);
   
   }
 
