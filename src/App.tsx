@@ -16,9 +16,9 @@ function App() {
     role: 'user' | 'system' | 'assistant',
     content: string
   }[]>([{
-  role: 'system',
-  content: 'Sos una entrevistadora IT evaluando a un candidato para una posicion React Junior.'
-  }])
+    role: 'system',
+    content: 'Sos una entrevistadora IT evaluando a un candidato para una posicion React Junior.'
+  },])
   function handleStartRecording(){
     setIsRecording(true)
 
@@ -52,9 +52,7 @@ function App() {
         stream: false,
         messages: draft,
       }),
-    })
-    .then(
-      (response) => response.json() as Promise<{message: {role: "assistant"; content: string}}>
+    }).then((response) => response.json() as Promise<{message: {role: "assistant"; content: string}}>
     )
     .then((response) => response.message)
 
