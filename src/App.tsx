@@ -10,7 +10,13 @@ function App() {
 
   const [isRecording, setIsRecording] = useState<boolean>(false)
   const [buffer, setBuffer] = useState<string>("");
-
+  const [messages, setMessages] = useState<{
+    role: 'user' | 'system' | 'assistant',
+    content: string
+  }[]>([{
+  role: 'system',
+  content: 'Sos una entrevistadora IT evaluando a un candidato para una posicion React Junior.'
+  }])
   function handleStartRecording(){
     setIsRecording(true)
 
@@ -26,10 +32,27 @@ function App() {
     })
   }
 
-  function handleEndRecording(){
+  async function handleEndRecording(){
     setIsRecording(false);
 
     recognition.stop();
+
+    const draft = structuredClone(messages)
+    draft.push({
+      role: 'user',
+      content: buffer
+    })
+
+    const answer = await fetch ("http://localhost:11434/api/chat", {
+      method: "POST",
+      body: JSON.stringify({
+        model: "llama3",
+        stream: false,
+        messages: draft
+      }),
+    }).then((response) => response.json() as Promise<{message: {role: 'asystand'; content: string}}> ).then(response => response.message)
+
+    console.log(answer);
   
   }
 
