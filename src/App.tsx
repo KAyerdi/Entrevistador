@@ -54,13 +54,13 @@ function App() {
       }),
     })
     .then(
-      (response) => response.json() as Promise<{message: {role: 'assistant'; content: string}}>
+      (response) => response.json() as Promise<{message: {role: "assistant"; content: string}}>
     )
     .then((response) => response.message)
 
   draft.push(answer);
+
   setMessages(draft);
-  
   }
 
   return (
