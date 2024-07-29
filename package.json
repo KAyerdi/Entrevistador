@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.19",
+    "cors": "^2.8.5",
     "ollama": "^0.5.6",
     "postcss": "^8.4.39",
     "react": "^18.3.1",
